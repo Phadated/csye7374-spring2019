@@ -5,9 +5,13 @@
   tasks:
 
   - import_role: 
-      name: common-role
+      name: kops/common-role
 
   - import_role: 
-      name: cluster-setup-role
+      name: kops/cluster-setup-role
+
+  
+  - import_role: 
+      name: kops/dashboard-role
   
    
