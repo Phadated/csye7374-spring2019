@@ -1,0 +1,19 @@
+---
+# tasks file for pod-role
+
+- name: Fetching aws account id
+  shell: aws sts get-caller-identity --output text --query 'Account'
+  register: accountid1
+
+- name: Create deployment 
+  shell: cat csye7374-pod.yaml | sed "s/xyz/{{accountid1.stdout}}/" | kubectl apply -f -
+  args:
+    chdir: ../k8s/app/
+
+- pause:
+    minutes: 5
+
+- name: Run application
+  shell: kubectl port-forward csye7374 8888:8080
+
+

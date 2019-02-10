@@ -1,0 +1,7 @@
+---
+# tasks file for pod-teardown-role
+
+- name: Delete pod
+  command: kubectl delete -f csye7374-pod.yaml
+  args:
+    chdir: ../k8s/app/
