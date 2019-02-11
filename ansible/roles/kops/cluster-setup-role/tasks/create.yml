@@ -1,12 +1,16 @@
 ---
+
+
 - name: setupcluster
+  vars:
+    nodecount: 3
   shell: kops create cluster 
          --node-size t2.micro 
          --master-size t2.micro 
          --kubernetes-version=1.13.0 
          --zones=us-east-1b 
          --master-zones=us-east-1b 
-         --node-count=1 {{clustername.stdout[:-1]}}
+         --node-count={{nodecount}} {{clustername.stdout[:-1]}}
          --state=s3://{{clustername.stdout[:-1]}}
          --ssh-public-key=~/.ssh/id_rsa.pub
 
@@ -16,3 +20,16 @@
          --state=s3://{{clustername.stdout[:-1]}}
          --ssh-public-key=~/.ssh/id_rsa.pub --yes
 
+- pause:
+    minutes: 1
+
+
+- name: validate cluster
+  shell: kops validate cluster --name {{clustername.stdout[:-1]}}
+        --state=s3://{{clustername.stdout[:-1]}}
+
+  delegate_to: localhost
+  register: result
+  until: result.stdout.find("is ready") !=-1
+  retries: 14
+  delay: 60
