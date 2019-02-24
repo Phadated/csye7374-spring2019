@@ -1,0 +1,81 @@
+---
+
+
+- name: VPC FACTS
+  ec2_vpc_net_facts:
+    region: "us-east-1"
+    
+  register: vpc_facts
+
+- name: Display facts
+  debug: var=vpc_facts
+  
+
+- name: vpc subnet facts
+  ec2_vpc_subnet_facts:
+    region: us-east-1
+    filters:
+      vpc-id: "{{vpc_facts.vpcs.1.vpc_id}}"
+  register: subnet_facts
+
+- name: Display subnet facts
+  debug: var=subnet_facts
+
+
+- name: Securitygrouprds
+  ec2_group:
+    name: csye6225-rds
+    description: rds security group
+    vpc_id: "{{vpc_facts.vpcs.1.vpc_id}}"
+    region: us-east-1
+    tags: 
+      Name: "csyerds"
+    rules:
+      - proto: tcp
+        from_port: 3306
+        to_port: 3306
+        cidr_ip: 0.0.0.0/0
+
+- name: Get facts of security group rds
+  ec2_group_facts:
+    filters:
+      "tag:Name": csyerds
+    
+  register: webrdsfacts
+
+- name: Display facts security rds group
+  debug: var=webrdsfacts
+
+- name: DB Subnet group
+  rds_subnet_group:
+    state: present
+    name: csyedbgroup6225
+    description: making a RDS subnet from my VPC
+    region: us-east-1
+    subnets:
+      - "{{subnet_facts.subnets.0.subnet_id}}"
+      - "{{subnet_facts.subnets.1.subnet_id}}"
+      - "{{subnet_facts.subnets.2.subnet_id}}"
+
+   
+- name: DB Instance
+  rds:
+    command: create
+    instance_name: new-database
+    db_engine: MySQL
+    region: us-east-1
+    size: 10
+    instance_type: db.t2.medium
+    db_name: csye6225
+    username: csye6225master
+    password: csye6225password
+    vpc_security_groups: 
+      - "{{webrdsfacts.security_groups.0.group_id}}"
+    subnet: csyedbgroup6225
+
+     
+
+
+
+
+      

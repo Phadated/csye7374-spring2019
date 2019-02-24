@@ -1,0 +1,4 @@
+---
+# tasks file for rds-create-role
+
+- include_tasks: create-rds.yml

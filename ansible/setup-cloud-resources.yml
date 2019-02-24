@@ -1,0 +1,10 @@
+---
+- hosts: localhost
+  connection: local
+  tasks:
+
+  - import_role: 
+      name: kops/s3-bucket-role
+
+  - import_role: 
+      name: kops/rds-create-role
