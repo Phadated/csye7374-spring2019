@@ -1,0 +1,35 @@
+---
+
+- name: Get facts of security group rds
+  ec2_group_facts:
+    filters:
+      "tag:Name": csyerds
+    
+  register: webrdsfacts
+
+- name: Display facts security rds group
+  debug: var=webrdsfacts
+
+- name: Delete RDS
+  rds:
+    command: delete
+    instance_name: new-database
+    region: us-east-1
+
+- pause:
+    minutes: 5
+    
+
+- name: Delete subnet group
+  rds_subnet_group:
+    state: absent
+    name: csyedbgroup6225
+    region: us-east-1
+
+
+- name: Delete ec2 rds security group 
+  ec2_group:
+    group_id: "{{webrdsfacts.security_groups.0.group_id}}"
+    state: absent
+  
+
