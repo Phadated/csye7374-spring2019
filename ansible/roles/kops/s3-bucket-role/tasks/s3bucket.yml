@@ -1,0 +1,28 @@
+---
+
+- name: Fetching cluster name from Route53
+  shell: aws route53 list-hosted-zones | jq -r '.HostedZones[1].Name'
+  register: clustername
+
+
+- name: Ensure boto
+  pip:
+    name: boto
+
+- name: Ensure botocore
+  pip:
+    name: botocore
+
+- name: Ensure boto3
+  pip:
+    name: boto3
+
+- name:
+  s3_bucket:
+    name: "{{clustername.stdout}}resource"
+    region: "us-east-1"
+  register: s3_url
+
+- name: Display s3 url
+  debug: var=s3_url
+  

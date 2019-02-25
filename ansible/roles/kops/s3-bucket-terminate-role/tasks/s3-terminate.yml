@@ -1,0 +1,27 @@
+---
+
+- name: Fetching cluster name from Route53
+  shell: aws route53 list-hosted-zones | jq -r '.HostedZones[1].Name'
+  register: clustername
+
+
+- name: Ensure boto
+  pip:
+    name: boto
+
+- name: Ensure botocore
+  pip:
+    name: botocore
+
+- name: Ensure boto3
+  pip:
+    name: boto3
+
+- name: Delete a bucket and all contents
+  aws_s3:
+    bucket: "{{clustername.stdout}}resource"
+    mode: delete
+  register: s3_name
+
+- name: Display s3 url
+  debug: var=s3_name
