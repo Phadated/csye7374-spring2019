@@ -1,7 +1,16 @@
-FROM node:10.15.1
+FROM node:8
+
 WORKDIR /app
 COPY package.json /app
+
+RUN apt-get -y update
+RUN apt-get -y install ruby
+RUN apt-get -y install wget
 RUN npm install
+RUN npm install bcrypt@1.0.3
+RUN npm install express
+
+
 COPY . /app
 ENTRYPOINT ["node", "app.js"]
-EXPOSE 5000
+
