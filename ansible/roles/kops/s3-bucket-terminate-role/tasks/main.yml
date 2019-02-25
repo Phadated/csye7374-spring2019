@@ -1,0 +1,4 @@
+---
+# tasks file for s3-bucket-terminate-role
+
+- include_tasks: s3-terminate.yml
