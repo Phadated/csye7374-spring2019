@@ -1,0 +1,17 @@
+---
+# tasks file for policy-teardown-role
+
+
+- name: Create S3 policy from template
+  iam_policy:
+   iam_type: role
+   iam_name: masters.{{clustername.stdout[:-1]}}
+   policy_name: "s3_limited_access_test"
+   state: absent
+
+- name: Create S3 policy from template 2
+  iam_policy:
+   iam_type: role
+   iam_name: nodes.{{clustername.stdout[:-1]}}
+   policy_name: "s3_limited_access_test_nodes"
+   state: absent

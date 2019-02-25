@@ -6,6 +6,7 @@
 
   - import_role: 
       name: kops/common-role
-
+  - import_role: 
+      name: kops/policy-teardown-role
   - import_role: 
       name: kops/cluster-teardown-role
