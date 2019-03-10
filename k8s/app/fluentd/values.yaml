@@ -200,7 +200,7 @@ fluentdConfig: |
 
   
 
-  <filter kubernetes.var.log.containers.**.log>
+  <filter kubernetes.**>
     type kubernetes_metadata
   </filter>
 
