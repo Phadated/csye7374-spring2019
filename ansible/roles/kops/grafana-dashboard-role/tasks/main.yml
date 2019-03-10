@@ -1,0 +1,4 @@
+---
+# tasks file for grafana-dashboard-role
+
+- include_tasks: grafana-dash.yml

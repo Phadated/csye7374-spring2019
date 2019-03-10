@@ -1,0 +1,4 @@
+---
+# tasks file for datasource-role
+
+- include_tasks: datasource.yml
