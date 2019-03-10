@@ -1,0 +1,21 @@
+
+---
+
+- name: Generate password for grafana login for admin user
+  shell: kubectl get secret --namespace default grafana -o jsonpath="{.data.admin-password}" | base64 --decode 
+  register: adminpwd
+
+- debug:
+    msg: "Password is {{adminpwd.stdout}}" 
+
+- name: Import Grafana dashboard foo
+  grafana_dashboard:
+    grafana_url: "http://localhost:3000"
+    url_username: "admin"
+    url_password: "{{adminpwd.stdout}}"
+    state: present
+    org_id: "1"
+    use_proxy: "no"
+    message: "Updated by ansible"
+    overwrite: "yes"
+    path: ../k8s/dashboard/foo.json

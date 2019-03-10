@@ -5,8 +5,8 @@
   vars:
     nodecount: 3
   shell: kops create cluster 
-         --node-size t2.micro 
-         --master-size t2.micro 
+         --node-size t2.medium 
+         --master-size t2.medium 
          --kubernetes-version=1.13.0 
          --zones=us-east-1b,us-east-1c,us-east-1d
          --master-zones=us-east-1b 
@@ -51,6 +51,21 @@
    state: present
    policy_json: " {{ lookup( 'template', '../k8s/s3-policy-test.json') }} "
 
+- name: Create CloudWatchFullAccess policy from template
+  iam_policy:
+   iam_type: role
+   iam_name: masters.{{clustername.stdout[:-1]}}
+   policy_name: "CloudWatchFullAccessMaster"
+   state: present
+   policy_json: " {{ lookup( 'template', '../k8s/Cloudwatchfullaccess.json') }} "
+
+- name: Create CloudWatchFullaccess policy from template 2
+  iam_policy:
+   iam_type: role
+   iam_name: nodes.{{clustername.stdout[:-1]}}
+   policy_name: "CloudWatchFullAccessNodes"
+   state: present
+   policy_json: " {{ lookup( 'template', '../k8s/Cloudwatchfullaccess.json') }} "
 
   
 
