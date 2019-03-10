@@ -25,7 +25,7 @@ const AWS = require('aws-sdk');
 
 var s3 = new AWS.S3();
 
-
+const promClient = require('prom-client')
 
 const port = 5000;
 
@@ -166,6 +166,13 @@ app.get('/s3test', function(req, res){
         return res.status(200).send(result)
     })
  });
+
+ app.get('/metrics', (req, res) => {
+    res.set('Content-Type', promClient.register.contentType);
+    res.end(promClient.register.metrics());
+});
+promClient.collectDefaultMetrics();
+
 // set the app to listen on the port
 app.listen(port, () => {
     console.log(`Server running on port: ${port}`);

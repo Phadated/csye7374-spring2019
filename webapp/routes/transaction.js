@@ -2,13 +2,35 @@ const fs = require('fs');
 var jwt = require('jsonwebtoken');
 var SECRET_KEY = "AnKm";
 const uuidv2 = require('uuid/v1');
+const promClient = require('prom-client');
+
+const addTransactionCounter = new promClient.Counter({ 
+	name: 'add_transaction_counter', 
+	help: 'Number of visits to /transaction http.post' 
+});
+
+const deleteTransactionCounter = new promClient.Counter({ 
+	name: 'delete_transaction_counter', 
+	help: 'Number of visits to /transaction/:id http.delete' 
+});
+
+const getTransactionCounter = new promClient.Counter({ 
+	name: 'get_transaction_counter', 
+	help: 'Number of visits to /transaction http.get' 
+});
+
+const editTransactionCounter = new promClient.Counter({ 
+	name: 'edit_transaction_counter', 
+	help: 'Number of visits to /transaction/:id http.put' 
+});
 
 module.exports = {
    
     addTransaction: (req, res) => {
 
-    	//get token using jwt verify
-    	client.increment('addTransaction.http.post');
+			//get token using jwt verify
+			addTransactionCounter.inc();
+			client.increment('addTransaction.http.post');
     	var token = req.headers['x-access-token'];
     	 if (!token) return res.status(401).send({ auth: false, message: 'No token provided.' });
 
@@ -54,7 +76,8 @@ module.exports = {
     deleteTransaction: (req, res) => {
 
     	 //get token using jwt verify
-    	 client.increment('deleteTransaction.http.delete');
+			 client.increment('deleteTransaction.http.delete');
+			 deleteTransactionCounter.inc();
     	 var token = req.headers['x-access-token'];
     	 if (!token) return res.status(401).send({ auth: false, message: 'No token provided.' });
 
@@ -82,7 +105,8 @@ module.exports = {
 	getTransaction: (req, res) => {
 
     	//get token using jwt verify
-    	client.increment('getTransaction.http.get');
+			client.increment('getTransaction.http.get');
+			getTransactionCounter.inc();
     	 var token = req.headers['x-access-token'];
     	 if (!token) return res.status(401).send({ auth: false, message: 'No token provided.' });
 
@@ -111,7 +135,8 @@ module.exports = {
     editTransaction: (req, res) => {
 
        //get token using jwt verify
-       client.increment('editTransaction.http.put');
+			 client.increment('editTransaction.http.put');
+			 editTransactionCounter.inc();
        var token = req.headers['x-access-token'];
     	 if (!token) return res.status(401).send({ auth: false, message: 'No token provided.' });
 

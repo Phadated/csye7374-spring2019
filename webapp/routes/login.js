@@ -7,6 +7,17 @@ var SECRET_KEY = "AnKm";
 var validator = require("email-validator");
 // var StatsD = require('node-statsd');
 // var client = new StatsD();
+const promClient = require('prom-client');
+
+const createUserCounter = new promClient.Counter({ 
+    name: 'create_user_counter', 
+    help: 'Number of visits to /user/register' 
+});
+
+const timeLoginCounter = new promClient.Counter({ 
+    name: 'time_login_counter', 
+    help: 'Number of visits to /time' 
+});
 
 module.exports = {
     
@@ -28,6 +39,7 @@ module.exports = {
             if (results.length > 0) {
                
                //res.send("User already exists Please retry");
+               createUserCounter.inc();
                res.status(400).json({ success: false, msg: 'User already exists Please retry'});
 
             } else {
@@ -37,6 +49,7 @@ module.exports = {
                             var query = db.query ("INSERT INTO user  (username, password) values  ('" + username +"','" + hashedPassword +"')");
                             //res.status(200).json({ success: true, msg: 'User created'});
                     });
+                    createUserCounter.inc();
                    //res.send("User already exists Please retry");
                    res.status(200).json({ success: true, msg: 'User created'});
 
@@ -47,6 +60,7 @@ module.exports = {
         }
 
         else{
+            createUserCounter.inc();
             res.status(400).json({ success: false, msg: 'Username is invalid'});
         }
     },
@@ -61,6 +75,7 @@ module.exports = {
 
         if (!user) {
             //return res.status(500).send("Basic-Authentication Required");
+            timeLoginCounter.inc();
             return res.status(400).json({ success: false, msg: 'Basic-Authentication Required' });
         }
         else {
@@ -80,6 +95,7 @@ module.exports = {
 
                     }
                     else if (results.length < 1) {
+                        timeLoginCounter.inc();
                         res.status(400).json({ success: false, msg: 'Access Denied' });
                         //res.end("ACCESS DENIED");
 
@@ -88,6 +104,7 @@ module.exports = {
                         bcrypt.compare(user.pass, results[0].password)
                             .then(function (samePassword) {
                                 if (!samePassword) {
+                                    timeLoginCounter.inc();
                                     res.status(403).send();
                                 }
                                 var date = new Date();
@@ -96,6 +113,7 @@ module.exports = {
 
                                 var token = jwt.sign({ id: results[0].ID }, SECRET_KEY, { expiresIn: 5000 });
                                 console.log(token);
+                                timeLoginCounter.inc();
                                 res.status(200).json({ success: true, msg: 'WELCOME YOU ARE LOGGED IN.' + date, token: token });
                                 //res.send(token);
                                 //callback(res, token);
