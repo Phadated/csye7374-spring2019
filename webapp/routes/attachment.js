@@ -7,8 +7,30 @@ const mkdirp = require('mkdirp');
 const uuidv1 = require('uuid/v1');
 const AWS = require('aws-sdk');
 require('dotenv').config()
+const promClient = require('prom-client');
+
 //var config = require('../config').get(process.env.NODE_ENV);
 /////////
+
+const addAttachmentsCounter = new promClient.Counter({ 
+	name: 'add_attachment_counter', 
+	help: 'Number of visits to /transaction/:id/attachments  - http.post' 
+});
+
+const deleteAttachmentsCounter = new promClient.Counter({ 
+	name: 'delete_attachment_counter', 
+	help: 'Number of visits to /transaction/:id/attachments/:attachmentid  - http.delete' 
+});
+
+const editAttachmentsCounter = new promClient.Counter({ 
+	name: 'edit_attachment_counter', 
+	help: 'Number of visits to /transaction/:id/attachments/:attachmentid  - http.put' 
+});
+
+const getAttachmentsCounter = new promClient.Counter({ 
+	name: 'get_attachment_counter', 
+	help: 'Number of visits to /transaction/:id/attachments - http.get' 
+});
 
 const streamifier = require('streamifier');
 let secret = JSON.parse(fs.readFileSync('./secret/Secrets.json'));
@@ -65,7 +87,8 @@ module.exports = {
 
 	addAttachments: (req, res) => {
 
-		client.increment('addAttachments.http.post');		
+		client.increment('addAttachments.http.post');
+		addAttachmentsCounter.inc();		
 		var token = req.headers['x-access-token'];
 		if (!token) return res.status(401).send({ auth: false, message: 'No token provided.' });
 
@@ -158,7 +181,8 @@ module.exports = {
 	deleteAttachments: (req, res) => {
 
 		//get token using jwt verify
-		client.increment('deleteAttachments.http.delete');		
+		client.increment('deleteAttachments.http.delete');
+		deleteAttachmentsCounter.inc();		
 		var token = req.headers['x-access-token'];
 		if (!token) return res.status(401).send({ auth: false, message: 'No token provided.' });
 
@@ -235,7 +259,8 @@ module.exports = {
 	editAttachments: (req, res) => {
 
 		//get token using jwt verify
-		client.increment('editAttachments.http.put');		
+		client.increment('editAttachments.http.put');
+		editAttachmentsCounter.inc();		
 		var token = req.headers['x-access-token'];
 		if (!token) return res.status(401).send({ auth: false, message: 'No token provided.' });
 
@@ -363,7 +388,8 @@ module.exports = {
 	getAttachments: (req, res) => {
 
 		//get token using jwt verify
-		client.increment('getAttachments.http.get');		
+		client.increment('getAttachments.http.get');
+		getAttachmentsCounter.inc();		
 		var token = req.headers['x-access-token'];
 		if (!token) return res.status(401).send({ auth: false, message: 'No token provided.' });
 

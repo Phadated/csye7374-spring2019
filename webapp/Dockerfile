@@ -1,3 +1,4 @@
+FROM ubuntu:16.04
 FROM node:8
 
 WORKDIR /app
