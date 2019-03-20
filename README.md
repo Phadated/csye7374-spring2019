@@ -1,6 +1,6 @@
 # CSYE 7374 - Spring 2019
 
-## Team Information
+## Team Information test
 
 | Name | NEU ID | Email Address |
 | --- | --- | --- |
