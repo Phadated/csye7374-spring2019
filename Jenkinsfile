@@ -5,7 +5,7 @@ pipeline{
 
     stage('Clone sources') {
       steps {
-        checkout scm
+        checkout([$class: 'GitSCM', branches: [[name: '*/master']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[credentialsId: 'a4a5e7a3-014a-4846-96be-23e14b530b9a', url: 'https://github.com/krishjain4894/csye7374-spring2019.git']]])
     }
     }
     stage('Docker Build, Push'){
