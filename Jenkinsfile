@@ -5,7 +5,7 @@ pipeline{
 
     stage('Clone sources') {
       steps {
-        git url: 'https://github.com/krishjain4894/csye7374-spring2019.git'
+        checkout scm
     }
     }
     stage('Docker Build, Push'){
