@@ -6,7 +6,7 @@ pipeline {
   stages {    
     stage('Install dependencies') {
       steps {
-        sh 'echo dhanisha1'
+        sh 'echo dhanisha12'
       }
     }
   }     
