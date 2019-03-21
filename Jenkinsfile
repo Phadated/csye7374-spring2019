@@ -1,10 +1,12 @@
 pipeline {
   agent any
-    
+  options { 
+      skipDefaultCheckout() 
+  }
   stages {    
-    stage('Cloning Git') {
+    stage('Install dependencies') {
       steps {
-        git 'https://github.com/Phadated/csye7374-spring2019'
+        sh 'echo dhanisha'
       }
     }
   }     
