@@ -1,13 +1,11 @@
 pipeline {
-    agent { docker { image 'node:6.3' } }
-    options { 
-      skipDefaultCheckout() 
+  agent any
+    
+  stages {    
+    stage('Cloning Git') {
+      steps {
+        git 'https://github.com/Phadated/csye7374-spring2019'
+      }
     }
-    stages {
-        stage('build') {
-            steps {
-                sh 'npm --version'
-            }
-        }
-    }
+  }     
 }
