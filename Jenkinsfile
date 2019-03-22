@@ -17,7 +17,7 @@ pipeline{
     stage('Docker Build, Push'){
       steps {
         dir("ansible") {
-        ansiblePlaybook('path/buildimage.yml') {
+        ansiblePlaybook('buildimage.yml') {
         ansibleName('1.9.4')  
     }
         ansiblePlaybook(playbook : 'buildimage.yml')
