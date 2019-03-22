@@ -18,6 +18,7 @@ pipeline{
       steps {
         dir("ansible") {
         sh 'ls'
+        sh 'su jenkins'
         sh 'apt-get install ansible'
         sh 'ansible --version'
         ansiblePlaybook(playbook : 'buildimage.yml')
