@@ -3,8 +3,7 @@ pipeline{
   options { 
       skipDefaultCheckout() 
   }
-  tools {ansible "ansible"}
-  
+ 
   stages {
 
     stage('Clone sources') {
