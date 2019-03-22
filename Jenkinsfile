@@ -1,5 +1,6 @@
 pipeline{
   agent any
+  tools {ansible "ansible"}
   options { 
       skipDefaultCheckout() 
   }
@@ -17,11 +18,10 @@ pipeline{
     stage('Docker Build, Push'){
       steps {
         dir("ansible") {
-        ansiblePlaybook('buildimage.yml') {
-        ansibleName('1.9.4')  
+         ansiblePlaybook(playbook : 'buildimage.yml')
+         ansiblePlaybook(playbook : 'pushimage.yml')
     }
-        ansiblePlaybook(playbook : 'buildimage.yml')
-        ansiblePlaybook(playbook : 'pushimage.yml')
+        
           
         }
       }    
