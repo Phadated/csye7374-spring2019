@@ -4,7 +4,7 @@ pipeline{
   options { 
       skipDefaultCheckout() 
   }
- 
+  
   stages {
 
     stage('Clone sources') {
@@ -18,10 +18,11 @@ pipeline{
     stage('Docker Build, Push'){
       steps {
         dir("ansible") {
-         ansiblePlaybook(playbook : 'buildimage.yml')
-         ansiblePlaybook(playbook : 'pushimage.yml')
-    }
-        
+        sh 'ls'
+        sh 'apt-get install ansible'
+        sh 'ansible --version'
+        ansiblePlaybook(playbook : 'buildimage.yml')
+        ansiblePlaybook(playbook : 'pushimage.yml')
           
         }
       }    
