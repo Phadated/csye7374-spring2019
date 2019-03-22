@@ -18,7 +18,6 @@ pipeline{
       steps {
         dir("ansible") {
         sh 'ls'
-        sh 'apt-get install ansible'
         sh 'ansible --version'
         ansiblePlaybook(playbook : 'buildimage.yml')
         ansiblePlaybook(playbook : 'pushimage.yml')
