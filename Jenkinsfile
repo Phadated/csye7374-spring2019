@@ -1,6 +1,5 @@
 pipeline{
   agent any
-  tools {ansible "ansible"}
   options { 
       skipDefaultCheckout() 
   }
