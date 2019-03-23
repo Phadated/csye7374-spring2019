@@ -16,9 +16,8 @@ pipeline{
 
     stage('Docker Build, Push'){
       steps {
-        sh "
-        echo ${workspace}
-        ansible-playbook ${workspace}/buildimage.yml "
+        sh "echo ${workspace}"
+        sh "ansible-playbook ${workspace}/buildimage.yml "
        
       }    
     }
