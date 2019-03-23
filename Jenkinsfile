@@ -16,11 +16,9 @@ pipeline{
     
     stage('Docker Build, Push'){
       steps {
-        dir("ansible") {
-        ansiblePlaybook(playbook : 'buildimage.yml')
-        ansiblePlaybook(playbook : 'pushimage.yml')
-          
-        }
+        
+        ansiblePlaybook('${workspace}/buildimage.yml') 
+       
       }    
     }
    
