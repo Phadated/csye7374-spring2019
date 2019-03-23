@@ -20,7 +20,6 @@ pipeline{
                 env.PATH = "${tfHome}:${env.PATH}"
                  sh "pwd"
                  sh "echo $tfHome"
-                 sh "ansible --version"
                     
             }
             }
@@ -31,7 +30,10 @@ pipeline{
         sh "echo ${workspace}"
         ansiblePlaybook( 
         playbook: 'buildimage.yml'
-    )
+        ){
+          sudo(true)
+        sudoUser('root')
+        }
        
       }    
     }
