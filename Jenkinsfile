@@ -4,7 +4,7 @@ pipeline{
       skipDefaultCheckout() 
   }
   
-  
+  tool{'ansible'}
   
   stages {
     
