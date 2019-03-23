@@ -16,10 +16,9 @@ pipeline{
             steps {
                 script {
                 
-               def tfHome = tool name: 'ansible'
-                env.PATH = "${tfHome}:${env.PATH}"
+               
                  sh "pwd"
-                 sh "echo $tfHome"
+                
                   sh "ansible --version"
                     
             }
