@@ -6,14 +6,6 @@ pipeline{
   
   stages {
 
-    stage('Clone sources') {
-      steps {
-       checkout scm
-    }
-    }
-    
-
-    
     stage('Docker Build, Push'){
       steps {
         
