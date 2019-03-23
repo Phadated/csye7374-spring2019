@@ -30,10 +30,7 @@ pipeline{
         sh "echo ${workspace}"
         ansiblePlaybook( 
         playbook: 'buildimage.yml'
-        ){
-          sudo(true)
-        sudoUser('root')
-        }
+        )
        
       }    
     }
