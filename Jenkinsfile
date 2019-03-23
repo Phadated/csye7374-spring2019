@@ -20,6 +20,7 @@ pipeline{
                 env.PATH = "${tfHome}:${env.PATH}"
                  sh "pwd"
                  sh "echo $tfHome"
+                  sh "ansible --version"
                     
             }
             }
