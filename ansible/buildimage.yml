@@ -5,4 +5,4 @@
   tasks:
 
   - roles: 
-      name: kops/build_image
+    - role: kops/build_image
