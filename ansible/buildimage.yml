@@ -5,4 +5,4 @@
   tasks:
 
   - import_role: 
-      name: kops/build_image
+      name: ${workspace}/ansible/roles/kops/build_image
