@@ -15,7 +15,8 @@ pipeline{
     stage('Ansible Init') {
             steps {
                 script {
-                 
+                def tfHome = tool name: 'docker'
+                env.PATH = "${tfHome}:${env.PATH}"
                 sh "docker --version"
                 sh "echo $tfHome"
                 sh "pwd"
