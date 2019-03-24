@@ -20,7 +20,8 @@ pipeline{
                 sh "kubectl version"
                 sh "ansible --version"
                 sh "docker --version"
-                sh "ps aux"
+                sh "cd /var/"
+                sh "ls -l"
                 sh "docker run hello-world"
                 
                     
