@@ -15,11 +15,8 @@ pipeline{
     stage('Ansible Init') {
             steps {
                 script {
-                
-               
-                 sh "pwd"
-                
-                  sh "ansible --version"
+                sh "pwd"
+                sh "ansible --version"
                     
             }
             }
@@ -29,6 +26,7 @@ pipeline{
       steps {
         sh "echo ${workspace}"
         sh "ansible-playbook ${workspace}/ansible/buildimage.yml"
+        sh "ansible-playbook ${workspace}/ansible/pushimage.yml"
       }    
     }
    
