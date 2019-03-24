@@ -30,11 +30,7 @@ pipeline{
         
         dir("webapp") {
            sh "echo ${workspace}"
-          
-          //cleanup current user docker credentials
-       sh 'rm  ~/.dockercfg || true'
-       sh 'rm ~/.docker/config.json || true'
-        docker.build('csye7374')
+           sh " docker build -t csye7374 ."
        
         }
       }    
