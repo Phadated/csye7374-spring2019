@@ -15,11 +15,7 @@ pipeline{
     stage('Ansible Init') {
             steps {
                 script {
-                def tfHome = tool name: 'docker'
-                sh "cd /usr/bin/"
-                sh "tar -xvf ${tfHome}"
                 sh "docker --version"
-                sh "echo $tfHome"
                 sh "pwd"
                 sh "ansible --version"
                     
