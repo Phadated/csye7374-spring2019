@@ -15,9 +15,10 @@ pipeline{
     stage('Ansible Init') {
             steps {
                 script {
-                sh "docker --version"
+                
                 sh "pwd"
                 sh "ansible --version"
+                sh "docker --version"
                     
             }
             }
