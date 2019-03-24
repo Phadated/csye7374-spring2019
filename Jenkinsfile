@@ -16,7 +16,7 @@ pipeline{
             steps {
                 script {
                  
-
+                sh "docker --version"
                 sh "echo $tfHome"
                 sh "pwd"
                 sh "ansible --version"
