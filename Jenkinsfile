@@ -16,7 +16,8 @@ pipeline{
             steps {
                 script {
                 def tfHome = tool name: 'docker'
-                env.PATH = "${tfHome}:${env.PATH}"
+                sh "cd /usr/bin/"
+                sh "tar -xvf "${tfHome}"
                 sh "docker --version"
                 sh "echo $tfHome"
                 sh "pwd"
