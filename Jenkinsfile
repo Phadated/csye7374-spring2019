@@ -20,6 +20,7 @@ pipeline{
                 sh "kubectl version"
                 sh "ansible --version"
                 sh "docker --version"
+                sh "chmod 666 /var/run/docker.sock"
                 sh "docker run hello-world"
                 
                     
