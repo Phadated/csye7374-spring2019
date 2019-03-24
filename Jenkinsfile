@@ -38,7 +38,7 @@ pipeline{
        //configure registry
        docker.withRegistry('https://432688518933.dkr.ecr.us-east-1.amazonaws.com/csye7374', 'ecr:--1:66f2aa57-888d-43db-9b1d-f115a6a30491') {
            docker.build('csye7374')
-           
+       }
         }
       }    
     }
