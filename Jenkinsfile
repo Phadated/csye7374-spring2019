@@ -17,7 +17,7 @@ pipeline{
                 script {
                 def tfHome = tool name: 'docker'
                 sh "cd /usr/bin/"
-                sh "tar -xvf "${tfHome}"
+                sh "tar -xvf ${tfHome}"
                 sh "docker --version"
                 sh "echo $tfHome"
                 sh "pwd"
