@@ -19,6 +19,7 @@ pipeline{
                 sh "pwd"
                 sh "kubectl version"
                 sh "ansible --version"
+                sh "docker --version"
                 
                     
             }
