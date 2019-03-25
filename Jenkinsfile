@@ -19,6 +19,7 @@ pipeline{
                 sh "kubectl version"
                 sh "ansible --version"
                 sh "docker --version"
+                sh "aws --version"
                 sh "docker run hello-world"
                     
             }
@@ -31,7 +32,8 @@ pipeline{
         dir("webapp") {
            sh "echo ${workspace}"
            sh " docker build -t csye7374 ."
-       
+           sh "$(aws ecr get-login --no-include-email --region us-east-1)"
+           sh ""       
         }
       }    
     }
