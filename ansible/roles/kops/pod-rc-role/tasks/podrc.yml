@@ -13,9 +13,12 @@
 
 
 - name: Create replicationcontroller 
-  shell: cat csye7374-ReplicationCOntroller.yaml | sed "s/xyz/{{accountid1.stdout}}/" | kubectl apply -f -
+  vars:
+    imageTag: ""
+  shell: cat csye7374-ReplicationCOntroller.yaml | sed "s/xyz/{{accountid1.stdout}}/"  | kubectl apply -f -
   args:
     chdir: ../k8s/app/
+
 
 - name: Create service 
   shell: kubectl apply -f Service.yaml

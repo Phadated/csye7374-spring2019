@@ -1,11 +1,18 @@
-apiVersion: v1               
-kind: ReplicationController                    
+apiVersion: apps/v1               
+kind: Deployment                    
 metadata:
   name: csye7374-assign3-rc      
 spec:
   replicas: 3
+  minReadySeconds: 10
+  strategy:
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
+    type: RollingUpdate
   selector:
-    app: csye7374-webapp
+    matchLabels:
+      app: csye7374-webapp
   template:
     metadata:
       labels:
@@ -19,7 +26,7 @@ spec:
         secret:
           secretName: my-secret
       containers:
-      - image: xyz.dkr.ecr.us-east-1.amazonaws.com/csye7374:latest       
+      - image: xyz.dkr.ecr.us-east-1.amazonaws.com/csye7374:latest     
         name: csye7374
         command: ["/bin/sh","-c"]
         args: ["cd /app/config; pwd; cd ../; node app.js"]
@@ -28,7 +35,7 @@ spec:
             mountPath: /app/config
           - name: my-secret-mount
             mountPath: /app/secret
-        imagePullPolicy: Always
+        imagePullPolicy: IfNotPresent   
         livenessProbe:
           httpGet:
             path: /s3test
