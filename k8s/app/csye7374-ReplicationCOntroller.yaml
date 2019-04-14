@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: csye7374-assign3-rc      
 spec:
-  replicas: 3
+  replicas: 10
   minReadySeconds: 10
   strategy:
     rollingUpdate:
