@@ -1,0 +1,6 @@
+---
+
+- name: Create HPA
+  shell: cluster-autoscaler.sh
+  args:
+    chdir: ../k8s/app/
