@@ -47,7 +47,7 @@ podTemplate(
                 dir("webapp"){
                     echo "workspace: ${workspace}"
                     // sh "docker build -t csye7374 ."
-                    docker.withRegistry('https://xyz.dkr.ecr.us-east-1.amazonaws.com/csye7374', 'ecr:us-east-1:awskey') {
+                    docker.withRegistry('https://432688518933.dkr.ecr.us-east-1.amazonaws.com/csye7374', 'ecr:us-east-1:awskey') {
            
                         //build image
                         def customImage = docker.build("csye7374")
@@ -63,8 +63,8 @@ podTemplate(
         stage('Apply Kubernetes files') {
             dir("k8s/app"){
                 container('kubectl'){
-                    withKubeConfig([credentialsId: 'jenkins', serverUrl: 'https://api.k8s.csye6225-fall2018-hostname.me']) {
-                        sh "kubectl set image deployment csye7374-assign3-rc csye7374=xyz.dkr.ecr.us-east-1.amazonaws.com/csye7374:${commitId}"
+                    withKubeConfig([credentialsId: 'jenkins', serverUrl: 'https://api.k8s.csye6225-fall2018-phadated.me']) {
+                        sh "kubectl set image deployment csye7374-assign3-rc csye7374=432688518933.dkr.ecr.us-east-1.amazonaws.com/csye7374:${commitId}"
                     }
                 }
             }
