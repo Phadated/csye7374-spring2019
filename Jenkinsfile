@@ -56,7 +56,7 @@ podTemplate(
                // some block
                //accountid = sh (script: "aws route53 list-hosted-zones | jq -r '.HostedZones[1].Name'")
                clustername = sh(script: "aws route53 list-hosted-zones | jq -r '.HostedZones[1].Name'", returnStdout: true).trim()
-               def lengthMinus2 = clustername.length() - 2
+               def lengthMinus2 = clustername.length() - 1
                clustername = clustername.substring(0, lengthMinus2)
                accountid = sh(script: "aws sts get-caller-identity --output text --query 'Account'", returnStdout: true).trim()
                echo "accountid : ${accountid}"
