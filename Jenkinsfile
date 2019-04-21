@@ -38,40 +38,40 @@ podTemplate(
     node('mypod') {
         def commitId
 
-        stage ('Extract') {
-            checkout scm
-            commitId = sh(script: 'git rev-parse --short HEAD', returnStdout: true).trim()
-            def ws = pwd()
-            echo "work space is : ${workspace}"
-            //echo "files: ${files}"
-            echo "ws: ${ws}"
-        }
+        //stage ('Extract') {
+        //    checkout scm
+         ///   commitId = sh(script: 'git rev-parse --short HEAD', returnStdout: true).trim()
+         //   def ws = pwd()
+         //   echo "work space is : ${workspace}"
+       //     //echo "files: ${files}"
+      //      echo "ws: ${ws}"
+      //  }
         
-        def repository
-        stage ('Docker') {
-            container ('docker') {
-                dir("webapp"){
-                    echo "workspace: ${workspace}"
+     //   def repository
+     //   stage ('Docker') {
+      //      container ('docker') {
+        //        dir("webapp"){
+        //            echo "workspace: ${workspace}"
                     // sh "docker build -t csye7374 ."
-                    docker.withRegistry('https://432688518933.dkr.ecr.us-east-1.amazonaws.com/csye7374', 'ecr:us-east-1:awskey') {
+         //           docker.withRegistry('https://432688518933.dkr.ecr.us-east-1.amazonaws.com/csye7374', 'ecr:us-east-1:awskey') {
            
                         //build image
-                        def customImage = docker.build("csye7374")
+          //              def customImage = docker.build("csye7374")
                         
                         //push image
-                        customImage.push("${commitId}")
-                    }
+           //             customImage.push("${commitId}")
+            //        }
                 
-            }
+      //      }
 
-        }
-        }
+      //  }
+      //  }
         
         stage('awscli'){
             container ('awscli'){
                withAWS(credentials: 'awskey') {
                // some block
-               sh 'aws s3api list-buckets'
+               sh "aws s3api list-buckets"
            }
             }
         }
