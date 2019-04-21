@@ -60,6 +60,7 @@ podTemplate(
                clustername = clustername.substring(0, lengthMinus2)
                accountid = sh(script: "aws sts get-caller-identity --output text --query 'Account'", returnStdout: true).trim()
                echo "accountid : ${accountid}"
+               echo "${clustername}"
             }
             }
         }
