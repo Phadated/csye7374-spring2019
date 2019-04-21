@@ -73,7 +73,7 @@ podTemplate(
                withAWS(credentials: 'awskey') {
                // some block
                //accountid = sh (script: "aws route53 list-hosted-zones | jq -r '.HostedZones[1].Name'")
-               clustername = sh(script: "aws route53 list-hosted-zones | jq -r '.HostedZones[1].Name' | :: -1", returnStdout: true).trim()
+               clustername = sh(script: "aws route53 list-hosted-zones | jq -r '.HostedZones[1].Name'", returnStdout: true).trim()
                accountid = sh(script: "aws sts get-caller-identity --output text --query 'Account'", returnStdout: true).trim()
                echo "accountid : ${accountid}"
             }
