@@ -87,7 +87,7 @@ podTemplate(
         stage('Apply Kubernetes files') {
             dir("k8s/app"){
                 container('kubectl'){
-                    withKubeConfig([credentialsId: 'jenkins', serverUrl: 'https://api.${clustername}']) {
+                    withKubeConfig([credentialsId: 'jenkins', serverUrl: "https://api.${clustername}"]) {
                         sh "kubectl set image deployment csye7374-assign3-rc csye7374=${accountid}.dkr.ecr.us-east-1.amazonaws.com/csye7374:${commitId}"
                     }
                 }
