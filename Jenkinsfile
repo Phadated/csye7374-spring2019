@@ -20,6 +20,12 @@ podTemplate(
             image: 'lachlanevenson/k8s-kubectl:v1.8.0',
             ttyEnabled: true,
             command: 'cat'
+        ),
+        containerTemplate(
+            name: 'AWScli', 
+            image: 'mesosphere/aws-cli',
+            ttyEnabled: true,
+            command: 'cat'
         )
     ],
     volumes: [
@@ -59,6 +65,15 @@ podTemplate(
             }
 
         }
+        }
+        
+        stage('AWScli'){
+            container ('AWScli'){
+               withAWS(credentials: 'awskey') {
+               // some block
+               sh 'aws s3api list-buckets'
+           }
+            }
         }
         stage('Apply Kubernetes files') {
             dir("k8s/app"){
