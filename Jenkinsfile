@@ -72,7 +72,8 @@ podTemplate(
             container ('awscli'){
                withAWS(credentials: 'awskey') {
                // some block
-               accountid = sh (script: "aws route53 list-hosted-zones | jq -r '.HostedZones[1].Name'")
+               //accountid = sh (script: "aws route53 list-hosted-zones | jq -r '.HostedZones[1].Name'")
+               accountid = sh(script: "aws route53 list-hosted-zones | jq -r '.HostedZones[1].Name'", returnStdout: true).trim()
                test = accountid[0..-1]
                echo "test : ${test}"
             }
