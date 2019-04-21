@@ -22,7 +22,7 @@ podTemplate(
             command: 'cat'
         ),
         containerTemplate(
-            name: 'AWScli', 
+            name: 'awscli', 
             image: 'mesosphere/aws-cli',
             ttyEnabled: true,
             command: 'cat'
@@ -67,8 +67,8 @@ podTemplate(
         }
         }
         
-        stage('AWScli'){
-            container ('AWScli'){
+        stage('awscli'){
+            container ('awscli'){
                withAWS(credentials: 'awskey') {
                // some block
                sh 'aws s3api list-buckets'
