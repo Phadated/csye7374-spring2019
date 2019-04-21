@@ -23,7 +23,7 @@ podTemplate(
         ),
         containerTemplate(
             name: 'awscli', 
-            image: 'mesosphere/aws-cli',
+            image: 'atlassian/pipelines-awscli',
             ttyEnabled: true,
             command: 'cat'
         )
@@ -66,13 +66,13 @@ podTemplate(
 
       //  }
       //  }
-        
+        def accountid
         stage('awscli'){
             container ('awscli'){
                withAWS(credentials: 'awskey') {
                // some block
-               sh "aws s3api list-buckets"
-           }
+               accountid = (script: sh "aws route53 list-hosted-zones | jq -r '.HostedZones[1].Name")
+            }
             }
         }
       //  stage('Apply Kubernetes files') {
