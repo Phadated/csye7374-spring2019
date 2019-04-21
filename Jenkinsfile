@@ -56,6 +56,8 @@ podTemplate(
                // some block
                //accountid = sh (script: "aws route53 list-hosted-zones | jq -r '.HostedZones[1].Name'")
                clustername = sh(script: "aws route53 list-hosted-zones | jq -r '.HostedZones[1].Name'", returnStdout: true).trim()
+               def lengthMinus2 = clustername.length() - 2
+               clustername = clustername.substring(0, lengthMinus2)
                accountid = sh(script: "aws sts get-caller-identity --output text --query 'Account'", returnStdout: true).trim()
                echo "accountid : ${accountid}"
             }
@@ -85,7 +87,7 @@ podTemplate(
         stage('Apply Kubernetes files') {
             dir("k8s/app"){
                 container('kubectl'){
-                    withKubeConfig([credentialsId: 'jenkins', serverUrl: 'https://api.k8s.csye6225-fall2018-phadated.me']) {
+                    withKubeConfig([credentialsId: 'jenkins', serverUrl: 'https://api.${clustername}']) {
                         sh "kubectl set image deployment csye7374-assign3-rc csye7374=${accountid}.dkr.ecr.us-east-1.amazonaws.com/csye7374:${commitId}"
                     }
                 }
